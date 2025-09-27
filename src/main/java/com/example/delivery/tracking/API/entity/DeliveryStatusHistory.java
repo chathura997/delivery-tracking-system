@@ -3,10 +3,15 @@ package com.example.delivery.tracking.API.entity;
 import com.example.delivery.tracking.API.enums.DeliveryStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-
+@Builder
+@Data
+@RequiredArgsConstructor
 @Entity
 @Table(name = "delivery_status_history")
 public class DeliveryStatusHistory {

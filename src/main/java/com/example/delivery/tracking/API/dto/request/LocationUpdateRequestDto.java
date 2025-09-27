@@ -1,4 +1,24 @@
 package com.example.delivery.tracking.API.dto.request;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@RequiredArgsConstructor
 public class LocationUpdateRequestDto {
+    private Long driverId;
+    private Long deliveryId;
+
+    private BigDecimal latitude;
+    private BigDecimal longitude;
+    private BigDecimal accuracy;
+    private BigDecimal speed;
+    private BigDecimal heading;
+
+    private LocalDateTime recordedAt;
 }
