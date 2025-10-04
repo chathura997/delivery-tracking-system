@@ -1,15 +1,14 @@
 package com.example.delivery.tracking.API.dto.response;
 
 import com.example.delivery.tracking.API.enums.DriverStatus;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class DriverResponseDto {
 

@@ -1,17 +1,16 @@
 package com.example.delivery.tracking.API.dto.request;
 
 import com.example.delivery.tracking.API.enums.DeliveryStatus;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 @Data
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryStatusHistoryRequestDto {
 
-    private Long deliveryId; // Reference to Delivery entity
+    private Long deliveryId;
     private DeliveryStatus oldStatus;
     private DeliveryStatus newStatus;
     private String changedBy;
