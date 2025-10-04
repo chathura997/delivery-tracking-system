@@ -1,23 +1,22 @@
-package com.example.delivery.tracking.API.dto.request;
+package com.example.delivery.tracking.API.dto.event;
 
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocationUpdateRequestDto {
-    private Long driverId;
-    private Long deliveryId;
+public class LocationUpdateEvent {
 
+    private Long driverId;
+    private String driverName;
+    private Long deliveryId;
     private BigDecimal latitude;
     private BigDecimal longitude;
-    private BigDecimal accuracy;
     private BigDecimal speed;
     private BigDecimal heading;
-
-    private LocalDateTime recordedAt;
+    private LocalDateTime timestamp;
 }

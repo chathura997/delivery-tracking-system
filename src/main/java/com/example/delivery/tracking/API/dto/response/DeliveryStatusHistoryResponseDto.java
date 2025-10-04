@@ -1,16 +1,15 @@
 package com.example.delivery.tracking.API.dto.response;
 
 import com.example.delivery.tracking.API.enums.DeliveryStatus;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryStatusHistoryResponseDto {
 
     private Long id;
