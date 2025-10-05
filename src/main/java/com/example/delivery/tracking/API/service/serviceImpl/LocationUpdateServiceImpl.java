@@ -1,5 +1,6 @@
 package com.example.delivery.tracking.API.service.serviceImpl;
 
+import com.example.delivery.tracking.API.dto.event.LocationUpdateEvent;
 import com.example.delivery.tracking.API.dto.request.LocationUpdateRequestDto;
 import com.example.delivery.tracking.API.dto.response.LocationUpdateResponseDto;
 import com.example.delivery.tracking.API.entity.Delivery;
@@ -11,8 +12,10 @@ import com.example.delivery.tracking.API.repository.DriverRepository;
 import com.example.delivery.tracking.API.repository.LocationUpdateRepository;
 import com.example.delivery.tracking.API.service.LocationUpdateService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,9 @@ public class LocationUpdateServiceImpl implements LocationUpdateService {
     private final DriverRepository driverRepository;
     private final DeliveryRepository deliveryRepository;
 
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
+
     @Override
     public LocationUpdateResponseDto create(LocationUpdateRequestDto dto) {
         Driver driver = driverRepository.findById(dto.getDriverId())
@@ -35,9 +41,21 @@ public class LocationUpdateServiceImpl implements LocationUpdateService {
             delivery = deliveryRepository.findById(dto.getDeliveryId())
                     .orElseThrow(() -> new RuntimeException("Delivery not found with id: " + dto.getDeliveryId()));
         }
-
         LocationUpdate locationUpdate = mapper.toEntity(dto, driver, delivery);
-        return mapper.toDto(locationUpdateRepository.save(locationUpdate));
+        LocationUpdate saved = locationUpdateRepository.save(locationUpdate);
+
+        LocationUpdateEvent event = new LocationUpdateEvent(
+                driver.getId(),
+                driver.getName(),
+                dto.getDeliveryId(),
+                dto.getLatitude(),
+                dto.getLongitude(),
+                dto.getSpeed(),
+                dto.getHeading(),
+                LocalDateTime.now()
+        );
+        kafkaTemplate.send("driver-location-updates", event);
+        return mapper.toDto(saved);
     }
 
     @Override
