@@ -4,6 +4,7 @@ import com.example.delivery.tracking.API.dto.request.DeliveryRequestDto;
 import com.example.delivery.tracking.API.dto.response.DeliveryResponseDto;
 import com.example.delivery.tracking.API.entity.Customer;
 import com.example.delivery.tracking.API.entity.Delivery;
+import com.example.delivery.tracking.API.enums.DeliveryStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,7 @@ public class DeliveryMapper {
                 .deliveryLongitude(dto.getDeliveryLongitude())
                 .deliveryNotes(dto.getDeliveryNotes())
                 .estimatedDeliveryTime(dto.getEstimatedDeliveryTime())
+                .status(dto.getDeliveryStatus() != null ? dto.getDeliveryStatus() : DeliveryStatus.PENDING)
                 .build();
     }
 
