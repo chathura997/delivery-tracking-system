@@ -21,7 +21,12 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public DriverResponseDto create(DriverRequestDto driverRequestDto) {
         Driver driver = driverMapper.toEntity(driverRequestDto);
-        return driverMapper.toDto(driverRepository.save(driver));
+        try {
+            Driver savedDriver = driverRepository.save(driver);
+            return driverMapper.toDto(savedDriver);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create driver", e);
+        }
     }
 
     @Override
